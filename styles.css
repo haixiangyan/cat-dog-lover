@@ -34,3 +34,7 @@ img {
     background: rgba(0, 0, 0, 0.6);
     border-radius: 8px;
 }
+
+audio {
+    margin-top: 8px;
+}
