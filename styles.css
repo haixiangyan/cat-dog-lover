@@ -33,6 +33,7 @@ img {
     font-size: 1.2em;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 8px;
+    text-align: center;
 }
 
 audio {

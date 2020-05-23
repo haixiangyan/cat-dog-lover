@@ -1,5 +1,15 @@
 const SPACE_KEY = ' '
+const ANALYSIS = 'analysis'
+const DEFAULT_ANALYSIS = {
+  cat: 0,
+  dog: 0,
+  lover: 0,
+  total: 0
+}
+
 const $imgs = Array.from(document.querySelectorAll('img'))
+const analysisString = localStorage.getItem(ANALYSIS)
+const analysis = analysisString ? JSON.parse(analysisString) : DEFAULT_ANALYSIS
 
 let start = false
 let intervalId = null
@@ -25,11 +35,51 @@ const endGame = () => {
   window.clearInterval(intervalId)
 }
 
+// 计数
+const mark = () => {
+  const visibleImage = $imgs.find(i => i.style.opacity === '1')
+
+  if (visibleImage) {
+    const {id} = visibleImage
+
+    // 类型 + 1
+    if (!(id in analysis)) { analysis[id] = 0 }
+    analysis[id] += 1
+
+    // 总数 + 1
+    if (!('total' in analysis)) { analysis.total = 0 }
+    analysis.total += 1
+
+    update(id, analysis[id], analysis.total)
+  }
+
+  // 保存
+  window.localStorage.setItem(ANALYSIS, JSON.stringify(analysis))
+}
+
+// 更新到面板上
+const update = (imageId, count, total) => {
+  const $item = document.querySelector(`#${imageId}-count`)
+  const $total = document.querySelector('#total-count')
+
+  if ($item.innerText) {
+    $item.innerText = count
+    $total.innerText = total
+  } else if ($item.textContent) {
+    $item.textContent = count
+    $total.textContent = total
+  } else {
+    $item.innerHTML = count
+    $total.innerHTML = total
+  }
+}
+
 // 按下任意按钮开始/结束游戏
 document.onkeydown = (e) => {
   if (e.key !== SPACE_KEY) return
 
   if (start) {
+    mark()
     endGame()
   } else {
     intervalId = startGame()
