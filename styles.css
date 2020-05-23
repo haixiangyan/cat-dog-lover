@@ -5,6 +5,7 @@
 }
 
 body {
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,4 +21,16 @@ img {
     width: 100%;
     transform: translateX(-50%);
     opacity: 0;
+}
+
+#tip {
+    position: fixed;
+    bottom: 10vh;
+    left: 50%;
+    padding: 24px;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.2em;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
 }
