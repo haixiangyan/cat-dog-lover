@@ -84,6 +84,8 @@ const update = (imageId, count, total) => {
 
 // 按下任意按钮开始/结束游戏
 document.onkeydown = (e) => {
+  e.preventDefault()
+
   if (e.key !== SPACE_KEY) return
 
   if (start) {
@@ -101,6 +103,7 @@ document.querySelector('#reset').onclick = () => {
   analysis = {...DEFAULT_ANALYSIS}
   window.localStorage.setItem(ANALYSIS, JSON.stringify(analysis))
   initMark()
+  document.body.click()
 }
 
 // 显示第一个图片
