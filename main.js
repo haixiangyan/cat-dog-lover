@@ -9,7 +9,7 @@ const DEFAULT_ANALYSIS = {
 
 const $imgs = Array.from(document.querySelectorAll('img'))
 const analysisString = localStorage.getItem(ANALYSIS)
-let analysis = analysisString ? JSON.parse(analysisString) : DEFAULT_ANALYSIS
+let analysis = analysisString ? JSON.parse(analysisString) : {...DEFAULT_ANALYSIS}
 
 let start = false
 let intervalId = null
@@ -98,7 +98,7 @@ document.onkeydown = (e) => {
 
 // 监听重置
 document.querySelector('#reset').onclick = () => {
-  analysis = DEFAULT_ANALYSIS
+  analysis = {...DEFAULT_ANALYSIS}
   window.localStorage.setItem(ANALYSIS, JSON.stringify(analysis))
   initMark()
 }
