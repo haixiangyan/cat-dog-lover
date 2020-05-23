@@ -39,3 +39,19 @@ img {
 audio {
     margin-top: 8px;
 }
+
+.mark {
+    margin-top: 8px;
+    font-size: .9em;
+}
+
+button {
+    padding: 4px 8px;
+    border: none;
+    outline: none;
+    background: white;
+    color: black;
+    border-radius: 4px;
+    font-size: .8em;
+    cursor: pointer;
+}

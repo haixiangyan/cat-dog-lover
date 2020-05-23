@@ -9,7 +9,7 @@ const DEFAULT_ANALYSIS = {
 
 const $imgs = Array.from(document.querySelectorAll('img'))
 const analysisString = localStorage.getItem(ANALYSIS)
-const analysis = analysisString ? JSON.parse(analysisString) : DEFAULT_ANALYSIS
+let analysis = analysisString ? JSON.parse(analysisString) : DEFAULT_ANALYSIS
 
 let start = false
 let intervalId = null
@@ -57,6 +57,14 @@ const mark = () => {
   window.localStorage.setItem(ANALYSIS, JSON.stringify(analysis))
 }
 
+// 初始化计数
+const initMark = () => {
+  $imgs.forEach($img => {
+    const {id} = $img
+    update(id, analysis[id], analysis.total)
+  })
+}
+
 // 更新到面板上
 const update = (imageId, count, total) => {
   const $item = document.querySelector(`#${imageId}-count`)
@@ -88,6 +96,15 @@ document.onkeydown = (e) => {
   start = !start
 }
 
+// 监听重置
+document.querySelector('#reset').onclick = () => {
+  analysis = DEFAULT_ANALYSIS
+  window.localStorage.setItem(ANALYSIS, JSON.stringify(analysis))
+  initMark()
+}
+
 // 显示第一个图片
 const [$cat] = $imgs
 $cat.style.opacity = '1'
+
+initMark()
