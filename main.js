@@ -1,3 +1,4 @@
+const SPACE_KEY = ' '
 const $imgs = Array.from(document.querySelectorAll('img'))
 
 let start = false
@@ -25,7 +26,9 @@ const endGame = () => {
 }
 
 // 按下任意按钮开始/结束游戏
-document.onkeydown = () => {
+document.onkeydown = (e) => {
+  if (e.key !== SPACE_KEY) return
+
   if (start) {
     endGame()
   } else {
@@ -38,5 +41,3 @@ document.onkeydown = () => {
 // 显示第一个图片
 const [$cat] = $imgs
 $cat.style.opacity = '1'
-
-alert('按下空格开始和结束，看你做猫，做狗还是做情人 :)')
