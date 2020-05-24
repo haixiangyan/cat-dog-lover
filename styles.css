@@ -14,13 +14,8 @@ body {
 }
 
 img {
-    position: absolute;
     text-align: center;
-    top: 0;
-    left: 50%;
     width: 100%;
-    transform: translateX(-50%);
-    opacity: 0;
 }
 
 #tip {
@@ -54,6 +49,17 @@ button {
     border-radius: 4px;
     font-size: .8em;
     cursor: pointer;
+}
+.text-wrapper {
+    position: relative;
+}
+
+#text {
+    margin-top: 8px;
+    display: inline-block;
+    text-align: left;
+    width: 2em;
+    font-weight: bold;
 }
 
 .github-corner {

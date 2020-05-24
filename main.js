@@ -7,7 +7,16 @@ const DEFAULT_ANALYSIS = {
   total: 0
 }
 
-const $imgs = Array.from(document.querySelectorAll('img'))
+const COLOR = ['white', 'yellow', 'red']
+
+const items = [
+  {id: 'cat', text: '猫', img: 'img/cat.jpg'},
+  {id: 'dog', text: '狗', img: 'img/dog.jpg'},
+  {id: 'lover', text: '情人', img: 'img/lover.jpg'},
+]
+
+const $text = document.querySelector('#text')
+const $result = document.querySelector('#result')
 const $startButton = document.querySelector('#start')
 const $resetButton = document.querySelector('#reset')
 const analysisString = localStorage.getItem(ANALYSIS)
@@ -22,26 +31,26 @@ const startGame = () => {
   $startButton.textContent = '停'
   // 不断更新
   return setInterval(() => {
-    // 隐藏上一张
-    $imgs[curt].style.opacity = '0'
+    curt = (curt + 1) % items.length
 
-    // 下一张
-    curt = (curt + 1) % $imgs.length
-
-    // 显示下一张
-    $imgs[curt].style.opacity = '1'
-  }, 20)
+    $text.textContent = items[curt].text
+    $text.style.color = COLOR[curt]
+  }, 100)
 }
 
 // 结束游戏
 const endGame = () => {
   $startButton.textContent = '点击开始/接空格'
+
+  console.log('end', items[curt].img)
+  $result.src = items[curt].img
+
   window.clearInterval(intervalId)
 }
 
 // 计数
 const mark = () => {
-  const visibleImage = $imgs.find(i => i.style.opacity === '1')
+  const visibleImage = items[curt]
 
   if (visibleImage) {
     const {id} = visibleImage
@@ -63,8 +72,8 @@ const mark = () => {
 
 // 初始化计数
 const initMark = () => {
-  $imgs.forEach($img => {
-    const {id} = $img
+  items.forEach(item => {
+    const {id} = item
     update(id, analysis[id], analysis.total)
   })
 }
@@ -115,9 +124,5 @@ $resetButton.onclick = () => {
   initMark()
   document.body.click()
 }
-
-// 显示第一个图片
-const [$cat] = $imgs
-$cat.style.opacity = '1'
 
 initMark()
