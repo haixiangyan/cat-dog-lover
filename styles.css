@@ -55,3 +55,7 @@ button {
     font-size: .8em;
     cursor: pointer;
 }
+
+.github-corner {
+    z-index: 3;
+}
