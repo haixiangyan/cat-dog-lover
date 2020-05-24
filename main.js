@@ -8,6 +8,8 @@ const DEFAULT_ANALYSIS = {
 }
 
 const $imgs = Array.from(document.querySelectorAll('img'))
+const $startButton = document.querySelector('#start')
+const $resetButton = document.querySelector('#reset')
 const analysisString = localStorage.getItem(ANALYSIS)
 let analysis = analysisString ? JSON.parse(analysisString) : {...DEFAULT_ANALYSIS}
 
@@ -17,6 +19,7 @@ let curt = 0
 
 // 开始游戏
 const startGame = () => {
+  $startButton.textContent = '停'
   // 不断更新
   return setInterval(() => {
     // 隐藏上一张
@@ -32,6 +35,7 @@ const startGame = () => {
 
 // 结束游戏
 const endGame = () => {
+  $startButton.textContent = '点击开始/接空格'
   window.clearInterval(intervalId)
 }
 
@@ -83,11 +87,7 @@ const update = (imageId, count, total) => {
 }
 
 // 按下任意按钮开始/结束游戏
-document.onkeydown = (e) => {
-  e.preventDefault()
-
-  if (e.key !== SPACE_KEY) return
-
+const main = () => {
   if (start) {
     mark()
     endGame()
@@ -98,8 +98,18 @@ document.onkeydown = (e) => {
   start = !start
 }
 
+document.onkeydown = (e) => {
+  e.preventDefault()
+
+  if (e.key !== SPACE_KEY) return
+
+  main()
+}
+
+$startButton.onclick = () => main()
+
 // 监听重置
-document.querySelector('#reset').onclick = () => {
+$resetButton.onclick = () => {
   analysis = {...DEFAULT_ANALYSIS}
   window.localStorage.setItem(ANALYSIS, JSON.stringify(analysis))
   initMark()
